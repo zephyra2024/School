@@ -6,8 +6,12 @@ venv/
 *.db
 
 /__pycache__/
+
+
 ClassRoom/__pycache__/
 ClassRoom/migrations/__pycache__/
+
+
 school/__pycache__/
 
 
