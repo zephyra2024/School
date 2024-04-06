@@ -1,11 +1,17 @@
 from django.db import models
 from django.core.exceptions import ValidationError
 
+
+class Teacher(models.Model):
+    name = models.CharField(max_length=22)
+class Parent(models.Model):
+    name = models.CharField(max_length=22)
+    
 class Room(models.Model):
     room_id = models.CharField(max_length=55, primary_key=True, null=False, blank=False)
     room_name = models.CharField(max_length=255, null=False, blank=False, unique=True)
-    room_teacher = models.ForeignKey('Teacher', on_delete=models.CASCADE)
-    room_representative = models.ForeignKey('Parent', on_delete=models.CASCADE)
+    room_teacher = models.ForeignKey(Teacher, on_delete=models.CASCADE,null=True,blank=True)
+    room_representative = models.ForeignKey(Parent, on_delete=models.CASCADE,null=True,blank=True)
     room_count = models.PositiveIntegerField(default=0)
     
     def __str__(self):
@@ -37,9 +43,9 @@ class Room(models.Model):
 class Stream(models.Model):
     stream_id = models.CharField(max_length=55, primary_key=True, null=False, blank=False)
     stream_name = models.CharField(max_length=255, null=False, blank=False, unique=True)
-    stream_teacher = models.ForeignKey('Teacher', on_delete=models.CASCADE, null=True)
-    stream_representative = models.ForeignKey('Parent', on_delete=models.CASCADE, null=True)
-    stream_prefect = models.CharField(max_length=255, null=True)
+    stream_teacher = models.ForeignKey(Teacher, on_delete=models.CASCADE, null=True,blank=True)
+    stream_representative = models.ForeignKey(Parent, on_delete=models.CASCADE, null=True,blank=True)
+    stream_prefect = models.CharField(max_length=255, null=True,blank=True)
     stream_count = models.PositiveIntegerField(default=0)
     
     def __str__(self):
@@ -66,8 +72,3 @@ class Stream(models.Model):
     def save(self, *args, **kwargs):
         self.full_clean()  # Validate the model before saving
         super().save(*args, **kwargs)
-
-class Teacher(models.Model):
-    name = models.CharField(max_length=22)
-class Parent(models.Model):
-    name = models.CharField(max_length=22)
