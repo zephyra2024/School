@@ -1,5 +1,6 @@
-{% extends "base/base.html" %}
 
+{% extends "base/base.html" %}
+{% load static %}
 {% block sidelinks %}
 
 
@@ -10,10 +11,129 @@
 </a>
 <div class="collapse" id="collapseLayouts" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
     <nav class="sb-sidenav-menu-nested nav">
-        <a class="nav-link" href="./booking.html">Manage</a>
+        <a class="nav-link" href="{% url "manage_classrooms" %}">Manage</a>
         <a class="nav-link" href="./rooms-checkin.html">New Class Rooms</a>
        
 
 </div>
 
 {% endblock sidelinks %}
+
+{% block content %}
+{% if streams %}
+<h3 class="mt-4">Manage Streams</h3> 
+{% endif %}
+{% if rooms %}
+<h3 class="mt-4">Manage Class Rooms</h3>
+{% endif %}
+<div class="card mb-4">
+    <div class="card-header">
+        <i class="fas fa-house me-1"></i>
+        {% if rooms %}
+          Classes
+        {% endif %}
+        {% if streams %}
+          Streams
+        {% endif %}
+    </div>
+    <div class="card-body">
+        {% if rooms %}
+        <table id="datatablesSimple">
+            <thead>
+                <tr>
+                    <th>ClassID</th>
+                    <th>Class Name</th>
+                    <th>Streams</th>
+                    <th>Class Patron</th>
+                    <th>Class Representative</th>
+                    <th>Class Prefect</th>
+                    <th>Total</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tfoot>
+                <tr>
+                    <th>ClassID</th>
+                    <th>Class Name</th>
+                    <th>Streams</th>
+                    <th>Class Patron</th>
+                    <th>Class Representative</th>
+                    <th>Class Prefect</th>
+                    <th>Total</th>
+                    <th>Action</th>
+                </tr>
+            </tfoot>
+            <tbody>
+                    {% for room in rooms %}
+                        <tr>
+                            <td>{{room.room_id}}</td>
+                            <td>{{room.room_name}}</td>
+                            <td>{{room.room_count}}</td>
+                            <td>{{room.room_teacher}}</td>
+                            <td>{{room.room_representative}}</td>
+                            <td>{{room.room_prefect}}</td>
+                            <td>{{room.room_total}}</td>
+                            <td>
+                                <a href="" class="btn btn-primary"><i class="fa fa-cogs me-1" aria-hidden="true"></i>Manage</a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                
+                
+            </tbody>
+        </table>
+        {% endif %}
+        {% if streams %}
+        <table id="datatablesSimple">
+            <thead>
+                <tr>
+                    <th>StreamID</th>
+                    <th>Stream Name</th>
+                    <th>Streams</th>
+                    <th>Stream Patron</th>
+                    <th>Stream Representative</th>
+                    <th>Stream Prefect</th>
+                    <th>Total</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tfoot>
+                <tr>
+                    <th>StreamID</th>
+                    <th>Stream Name</th>
+                    <th>Streams</th>
+                    <th>Stream Patron</th>
+                    <th>Stream Representative</th>
+                    <th>Stream Prefect</th>
+                    <th>Total</th>
+                    <th>Action</th>
+                </tr>
+            </tfoot>
+            <tbody>
+                
+                    {% for stream in streams %}
+                        <tr>
+                            <td>{{stream.stream_room}}</td>
+                            <td>{{stream.stream_name}}</td>
+                            <td>{{stream.stream_count}}</td>
+                            <td>{{stream.stream_teacher}}</td>
+                            <td>{{stream.stream_representative}}</td>
+                            <td>{{stream.stream_prefect}}</td>
+                            <td>{{stream.stream_total}}</td>
+                            <td>
+                                <a href="" class="btn btn-primary"><i class="fa fa-cogs me-1" aria-hidden="true"></i>Manage</a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+               
+                
+            </tbody>
+        </table>
+        {% endif %}
+    </div>
+    
+</div>
+
+
+  
+{% endblock content %}

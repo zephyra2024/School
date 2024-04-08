@@ -43,6 +43,7 @@ class Room(models.Model):
 class Stream(models.Model):
     stream_id = models.CharField(max_length=55, primary_key=True, null=False, blank=False)
     stream_name = models.CharField(max_length=255, null=False, blank=False, unique=True)
+    stream_room = models.ForeignKey(Room,on_delete=models.CASCADE)
     stream_teacher = models.ForeignKey(Teacher, on_delete=models.CASCADE, null=True,blank=True)
     stream_representative = models.ForeignKey(Parent, on_delete=models.CASCADE, null=True,blank=True)
     stream_prefect = models.CharField(max_length=255, null=True,blank=True)

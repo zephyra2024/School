@@ -1,5 +1,6 @@
-{% extends "base/base.html" %}
 
+{% extends "base/base.html" %}
+{% load static %}
 {% block sidelinks %}
 
 
@@ -10,17 +11,28 @@
 </a>
 <div class="collapse" id="collapseLayouts" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
     <nav class="sb-sidenav-menu-nested nav">
-        <a class="nav-link" href="./booking.html">Manage</a>
+        <a class="nav-link" href="{% url "manage_classrooms" %}">Manage</a>
         <a class="nav-link" href="./rooms-checkin.html">New Class Rooms</a>
        
 
 </div>
+<a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseLayout" aria-expanded="false" aria-controls="collapseLayouts">
+    <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
+    Streams
+    <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+</a>
+<div class="collapse" id="collapseLayout" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
+    <nav class="sb-sidenav-menu-nested nav">
+        <a class="nav-link" href="{% url "manage_streams" %}">Manage</a>
+        <a class="nav-link" href="./rooms-checkin.html">New Stream</a>
+       
 
+</div>
 {% endblock sidelinks %}
 
 
 {% block content %}
-<h3 class="mt-4">Class Room Management</h3>
+                        <h3 class="mt-4">Class Room Management</h3>
                         <ol class="breadcrumb mb-4">
 
                         </ol>
