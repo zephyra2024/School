@@ -4,6 +4,15 @@ from . import views
 
 urlpatterns = [
     path('',views.classrooms, name='classrooms'),
-    path('manage/',views.manage_classrooms, name='manage_classrooms'),
-    path('streams/manage/',views.manage_streams, name='manage_streams'),
+    path('view/',views.view_classrooms, name='manage_classrooms'),
+    path('streams/view/',views.view_streams, name='manage_streams'),
+    
+    path('streams/manage/edit/<str:id>',views.edit_stream,name='manage-stream'),
+    path('manage/edit/<str:id>',views.edit_classroom,name='manage-room'),
+    
+    path('stream/add/',views.add_stream,name='add-stream'),
+    path('room/add/',views.add_stream,name='add-room'),
+    
+    
+    
 ]

@@ -12,7 +12,7 @@
 <div class="collapse" id="collapseLayouts" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
     <nav class="sb-sidenav-menu-nested nav">
         <a class="nav-link" href="{% url "manage_classrooms" %}">Manage</a>
-        <a class="nav-link" href="./rooms-checkin.html">New Class Rooms</a>
+        <a class="nav-link" href="{% url "add-room" %}">New Class Rooms</a>
        
 
 </div>
@@ -24,7 +24,7 @@
 <div class="collapse" id="collapseLayout" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
     <nav class="sb-sidenav-menu-nested nav">
         <a class="nav-link" href="{% url "manage_streams" %}">Manage</a>
-        <a class="nav-link" href="./rooms-checkin.html">New Stream</a>
+        <a class="nav-link" href="{% url "add-stream" %}">New Stream</a>
        
 
 </div>
