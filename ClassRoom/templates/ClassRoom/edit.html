@@ -11,7 +11,7 @@
             <form method="POST">
               {% csrf_token %}
               {{room_form}}
-              {{room_form.errors}}
+
             <button type="submit" class="btn btn-primary mt-2">Submit</button>
             </form>
 
@@ -22,7 +22,7 @@
             <form method="POST">
               {% csrf_token %}
               {{stream_form}}
-              {{stream_form.errors}}
+              
               <button type="submit" class="btn btn-primary mt-2">Submit</button>
             </form>
         {% endif %}

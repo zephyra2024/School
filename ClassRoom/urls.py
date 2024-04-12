@@ -11,7 +11,7 @@ urlpatterns = [
     path('manage/edit/<str:id>',views.edit_classroom,name='manage-room'),
     
     path('stream/add/',views.add_stream,name='add-stream'),
-    path('room/add/',views.add_stream,name='add-room'),
+    path('room/add/',views.add_room,name='add-room'),
     
     
     

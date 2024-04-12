@@ -79,6 +79,6 @@ def add_room(request):
         form = RoomForm(request.POST)
         if form.is_valid():
             form.save()
-            return redirect(reverse('manage_streams')+'?added=true')
+            return redirect(reverse('manage_classrooms')+'?added=true')
         return render(request,'ClassRoom/add.html',{'addroomForm':form})
     return render(request,'ClassRoom/add.html',{'addroomForm':form})

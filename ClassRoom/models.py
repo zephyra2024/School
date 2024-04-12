@@ -9,9 +9,13 @@ from django.dispatch import receiver
 from . import signals
 
 class Teacher(models.Model):
-    name = models.CharField(max_length=22)
+    name = models.CharField(max_length=22,primary_key=True)
 class Parent(models.Model):
-    name = models.CharField(max_length=22)
+    name = models.CharField(max_length=22,primary_key=True)
+    
+class Student(models.Model):
+    name = models.CharField(max_length=22,primary_key=True)
+    
     
 class Room(models.Model):
     room_id = models.CharField(max_length=55, primary_key=True, null=False, blank=False,verbose_name='Class ID')
@@ -22,16 +26,38 @@ class Room(models.Model):
     
     def __str__(self):
         return self.room_name
+    
+    def clean(self):
+        super().clean()
+        
+        if self.room_teacher:  # Check if stream_teacher is not None
 
+            # Check if stream_teacher exists in Teacher database
+            
+            if not Teacher.objects.filter(pk=self.room_teacher.pk).exists():
+                raise ValidationError({'stream_teacher': 'Teacher does not exist.'})
+
+        if self.room_representative:  # Check if stream_representative is not None
+            try:
+                # Check if stream_representative exists in Parent database
+                if not Parent.objects.filter(pk=self.room_representative.pk).exists():
+                    raise ValidationError({'stream_representative': 'Parent does not exist.'})
+            except Parent.DoesNotExist:
+                raise ValidationError({'stream_representative': 'Parent does not exist.'})
+
+            
+    def save(self, *args, **kwargs):
+        self.full_clean()  # Validate the model before saving
+        super().save(*args, **kwargs)
     
 
 class Stream(models.Model):
     stream_id = models.CharField(max_length=55, primary_key=True, null=False, blank=False)
     stream_name = models.CharField(max_length=255, null=False, blank=False, unique=True)
     stream_room = models.ForeignKey(Room,on_delete=models.CASCADE)
-    stream_teacher = models.ForeignKey(Teacher, on_delete=models.CASCADE, null=True,blank=True)
-    stream_representative = models.ForeignKey(Parent, on_delete=models.CASCADE, null=True,blank=True)
-    stream_prefect = models.CharField(max_length=255, null=True,blank=True)
+    stream_teacher = models.OneToOneField(Teacher, on_delete=models.CASCADE, null=True,blank=True)
+    stream_representative = models.OneToOneField(Parent, on_delete=models.CASCADE, null=True,blank=True)
+    stream_prefect = models.ForeignKey(Student,max_length=255, null=True,blank=True,on_delete=models.CASCADE)
     stream_count = models.PositiveIntegerField(default=0)
     
     def __str__(self):
@@ -39,22 +65,23 @@ class Stream(models.Model):
 
     def clean(self):
         super().clean()
+        
         if self.stream_teacher:  # Check if stream_teacher is not None
-            try:
-                # Check if stream_teacher exists in Teacher database
-                if not Teacher.objects.filter(pk=self.stream_teacher).exists():
-                    raise ValidationError({'stream_teacher': 'Teacher does not exist.'})
-            except Teacher.DoesNotExist:
+
+            # Check if stream_teacher exists in Teacher database
+            
+            if not Teacher.objects.filter(pk=self.stream_teacher.pk).exists():
                 raise ValidationError({'stream_teacher': 'Teacher does not exist.'})
 
         if self.stream_representative:  # Check if stream_representative is not None
             try:
                 # Check if stream_representative exists in Parent database
-                if not Parent.objects.filter(pk=self.stream_representative).exists():
+                if not Parent.objects.filter(pk=self.stream_representative.pk).exists():
                     raise ValidationError({'stream_representative': 'Parent does not exist.'})
             except Parent.DoesNotExist:
                 raise ValidationError({'stream_representative': 'Parent does not exist.'})
 
+            
     def save(self, *args, **kwargs):
         self.full_clean()  # Validate the model before saving
         super().save(*args, **kwargs)

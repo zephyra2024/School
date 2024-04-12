@@ -7,7 +7,7 @@
 <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseLayouts" aria-expanded="false" aria-controls="collapseLayouts">
     <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
     {% if streams %}Streams {% else %}{% endif %}
-    {% if rooms %}Class Rooms {% else %}View Mode{% endif %}
+    {% if rooms %}Class Rooms {% endif %}
     
 
     <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
@@ -22,7 +22,7 @@
           
         {% if rooms %}
           <a class="nav-link" href="{% url "manage_classrooms" %}">Manage</a>
-        <a class="nav-link" href="./rooms-checkin.html">New Class Rooms</a>
+        <a class="nav-link" href="{% url "add-room" %}">New Class Rooms</a>
         
         {% endif %}
        
@@ -59,8 +59,7 @@
 
 {% if streams %}
 <h3 class="mt-4">Manage Streams</h3> 
-{% else %}
-  <h3 class="mt-4">Manage Streams and Rooms</h3> 
+
 {% endif %}
 {% if rooms %}
 <h3 class="mt-4">Manage Class Rooms</h3>
@@ -89,7 +88,8 @@
                     <th>Class Representative</th>
                     <th>Class Prefect</th>
                     <th>Total</th>
-                    <th>Action</th>
+                    <th>View</th>
+                    <th>Edit</th>
                 </tr>
             </thead>
             <tfoot>
@@ -101,7 +101,8 @@
                     <th>Class Representative</th>
                     <th>Class Prefect</th>
                     <th>Total</th>
-                    <th>Action</th>
+                    <th>View</th>
+                    <th>Edit</th>
                 </tr>
             </tfoot>
             <tbody>
@@ -115,7 +116,11 @@
                             <td>{{room.room_prefect}}</td>
                             <td>{{room.room_total}}</td>
                             <td>
-                                <a href="{% url "manage-room" room.room_id %}" class="btn btn-primary"><i class="fa fa-cogs me-1" aria-hidden="true"></i>Manage</a>
+                                <a href="{% url "manage-room" room.room_id %}" class="btn btn-primary"><i class="fa fa-pencil-square me-1" aria-hidden="true"></i></a>
+                                
+                            </td>
+                            <td>
+                                <a href="{% url "manage-room" room.room_id %}" class="btn btn-primary"><i class="fa fa-pencil-square me-1" aria-hidden="true"></i></a>
                             </td>
                         </tr>
                     {% endfor %}
@@ -135,7 +140,8 @@
                     <th>Stream Representative</th>
                     <th>Stream Prefect</th>
                     <th>Total</th>
-                    <th>Action</th>
+                    <th>View</th>
+                    <th>Edit</th>
                 </tr>
             </thead>
             <tfoot>
@@ -147,7 +153,8 @@
                     <th>Stream Representative</th>
                     <th>Stream Prefect</th>
                     <th>Total</th>
-                    <th>Action</th>
+                    <th>View</th>
+                    <th>Edit</th>
                 </tr>
             </tfoot>
             <tbody>
@@ -162,7 +169,10 @@
                             <td>{{stream.stream_prefect}}</td>
                             <td>{{stream.stream_total}}</td>
                             <td>
-                                <a href="{% url "manage-stream" stream.stream_id%}" class="btn btn-primary"><i class="fa fa-cogs me-1" aria-hidden="true"></i>Manage</a>
+                                 <a href="{% url 'manage-stream' stream.stream_id%}" class="btn btn-primary"><i class="fa fa-eye me-1" aria-hidden="true"></i></a>
+                            </td>
+                            <td >
+                                <a href="{% url 'manage-stream' stream.stream_id%}" class="btn btn-primary"><i class="fa fa-pencil-square me-1" aria-hidden="true"></i></a>
                             </td>
                         </tr>
                     {% endfor %}
@@ -170,8 +180,10 @@
                 
             </tbody>
         </table>
-        {% else %}
-        <h5> No Data found</h5>
+
+        
+
+
         {% endif %}
     </div>
     
